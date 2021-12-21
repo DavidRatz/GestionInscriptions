@@ -11,14 +11,23 @@ import view.ActivityTypeView;
 public class App {
     public static void main(String[] args) throws Exception {
         ActivityTypeController activityTypeController = new ActivityTypeController(new ActivityType(),new ActivityTypeView());
-        List<ActivityType> activityList = activityTypeController.addActivityTypeAction();
-        System.out.println(Arrays.asList(activityList));
-
-        activityTypeController.myDataDataStore.save();   
-
-
-        for (ActivityType s : activityTypeController.activityTypeList){
-            System.out.println(s);
+        System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
+        //List<ActivityType> activityList = activityTypeController.addActivityTypeAction();
+        ActivityType activityAdded = activityTypeController.addActivityTypeAction();
+        if(activityTypeController.getView().getError() != null){
+            System.out.println(activityTypeController.getView().getError());
         }
+        else{
+            System.out.println("Le type d'activité ajoutée : " + activityAdded);
+        }
+        System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
+
+        ActivityType activityRemoved = activityTypeController.removeActivityTypeAction();
+
+        System.out.println("Le type d'activité supprimée : " + activityRemoved);
+
+        activityTypeController.myDataDataStore.save();
+
+        System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
     }
 }
