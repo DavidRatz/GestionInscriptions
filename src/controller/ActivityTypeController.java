@@ -45,18 +45,18 @@ public class ActivityTypeController {
         this.view = view;
     }
 
-    public ActivityType addActivityTypeAction() {
+    public void addActivityTypeAction() {
         String name = view.gestionActivityTypeName("ajouter");
         boolean registration = (view.gestionActivityTypeRegitration().equalsIgnoreCase("o") ? true : false);
         ActivityType activity2Add = null;
         view.setError(null);
+        view.setInformation(null);
 
         if(!name.isBlank() && !factory.get(name).isPresent()){
-            activity2Add = factory.addActivityType(name, registration);
+            view.setInformation("Le type d'activité ajoutée : " + factory.addActivityType(name, registration));
         }
         else
             view.setError("Le type d'activité exite déjà !");
-        return activity2Add;
     }
 
     public ActivityType removeActivityTypeAction() {
