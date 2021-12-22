@@ -6,6 +6,7 @@ public class ActivityTypeView {
     Scanner sc = new Scanner(System.in);
 
     private String error = null;
+    private String information = null;
     
     public String getError() {
         return error;
@@ -13,6 +14,14 @@ public class ActivityTypeView {
         
     public void setError(String error) {
          this.error = error;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     public String gestionActivityTypeName(String action) {
