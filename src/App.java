@@ -15,10 +15,10 @@ public class App {
         //List<ActivityType> activityList = activityTypeController.addActivityTypeAction();
         ActivityType activityAdded = activityTypeController.addActivityTypeAction();
         
-        if()
-        else{
-            System.out.println("Le type d'activité ajoutée : " + activityAdded);
-        }
+        // if()
+        // else{
+        //     System.out.println("Le type d'activité ajoutée : " + activityAdded);
+        // }
         System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
 
         ActivityType activityRemoved = activityTypeController.removeActivityTypeAction();
