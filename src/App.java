@@ -14,23 +14,38 @@ public class App {
         System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
         //List<ActivityType> activityList = activityTypeController.addActivityTypeAction();
         activityTypeController.addActivityTypeAction();
+
+        if(activityTypeController.getView().getError() != null){
+            System.out.println(activityTypeController.getView().getError());
+        }
         
         if(activityTypeController.getView().getInformation() != null){
             System.out.println(activityTypeController.getView().getInformation());
         }
 
-        
         System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
 
-        ActivityType activityRemoved = activityTypeController.removeActivityTypeAction();
-
-        System.out.println("Le type d'activité supprimée : " + activityRemoved);
-
-        activityTypeController.myDataDataStore.save();
+        activityTypeController.updateActivityTypeAction();
 
         if(activityTypeController.getView().getError() != null){
             System.out.println(activityTypeController.getView().getError());
         }
+        
+        if(activityTypeController.getView().getInformation() != null){
+            System.out.println(activityTypeController.getView().getInformation());
+        }
+
+        //activityTypeController.removeActivityTypeAction();
+
+        if(activityTypeController.getView().getError() != null){
+            System.out.println(activityTypeController.getView().getError());
+        }
+
+        if(activityTypeController.getView().getInformation() != null){
+            System.out.println(activityTypeController.getView().getInformation());
+        }
+
+        activityTypeController.myDataDataStore.save();
 
         System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
     }
