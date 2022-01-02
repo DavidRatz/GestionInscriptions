@@ -91,8 +91,9 @@ public class ActivityTypeController {
             activity2Update.setRegistrationRequired(newRegistration);     
             view.setInformation("Le type d'activité modifée : " + activity2Update); //factory.update(activityTypeList,activity2Update,activity2UpdateIndex));
         }
-        else
+        else{
             view.setError("Le type d'activité n'exite pas !");
+        }
         //return factory.getActivityTypeList();
     }
     
