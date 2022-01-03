@@ -16,15 +16,15 @@ public class ActivityTypeController {
     public ListActivityTypeFactory factory;
     private List<ActivityType> activityTypeList;
 
-    public DataStore<DataSerialize> myDataDataStore;
+   // public DataStore<DataSerialize> myDataDataStore;
     
     
-    public ActivityTypeController(ActivityType model, ActivityTypeView view) {
+    public ActivityTypeController(ActivityType model, ActivityTypeView view, DataStore<DataSerialize> myDataDataStore) {
         this.model = model;
         this.view = view;
         this.factory = new ListActivityTypeFactory();
         //this.activityTypeList = new ArrayList<>();
-        this.myDataDataStore = new DataStore<>("ActivityTypeList.ser", DataSerialize::new);
+       // this.myDataDataStore = new DataStore<>("ActivityTypeList.ser", DataSerialize::new);
         factory.setActivityTypeList(myDataDataStore.getData().activityTypeList);
         this.activityTypeList = factory.getActivityTypeList();
     }
