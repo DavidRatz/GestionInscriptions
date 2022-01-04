@@ -3,11 +3,11 @@ import java.util.List;
 
 import controller.ActivityTypeController;
 import controller.HoraireController;
+import factory.ListActivityTypeFactory;
 import model.ActivityHoraire;
 import model.ActivityType;
 import utils.DataSerialize;
 import utils.DataStore;
-import utils.ListActivityTypeFactory;
 import view.ActivityHoraireView;
 import view.ActivityTypeView;
 
@@ -19,9 +19,9 @@ public class App {
 
         System.out.println(Arrays.asList(activityTypeController.factory.getActivityTypeList()));
         //List<ActivityType> activityList = activityTypeController.addActivityTypeAction();
-        for (int i = 0; i < 5; i++) {
-            activityTypeController.addActivityTypeAction();
-        }
+        // for (int i = 0; i < 5; i++) {
+        //     activityTypeController.addActivityTypeAction();
+        // }
         
 
         if(activityTypeController.getView().getError() != null){
@@ -59,7 +59,27 @@ public class App {
         System.out.println("Liste d'horaire : ");
         System.out.println(Arrays.asList(horaireController.getListActivityHoraires()));
 
-        horaireController.addActivityHoraireAction();
+        //horaireController.addActivityHoraireAction();
+
+        if(horaireController.getView().getError() != null){
+            System.out.println(horaireController.getView().getError());
+        }
+
+        if(horaireController.getView().getInformation() != null){
+            System.out.println(horaireController.getView().getInformation());
+        }
+
+        System.out.println(Arrays.asList(horaireController.getListActivityHoraires()));
+
+        horaireController.updateActivityHoraireAction();
+
+        if(horaireController.getView().getError() != null){
+            System.out.println(horaireController.getView().getError());
+        }
+
+        if(horaireController.getView().getInformation() != null){
+            System.out.println(horaireController.getView().getInformation());
+        }
 
         System.out.println(Arrays.asList(horaireController.getListActivityHoraires()));
 

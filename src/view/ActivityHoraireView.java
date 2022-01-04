@@ -35,8 +35,9 @@ public class ActivityHoraireView {
     public String askUser(String texte2Display, List<ActivityType> listActivityTypes) {
         
         int i = 1;
+        System.out.println("(0) name : no changes");
         for (ActivityType activityType : listActivityTypes) {
-            System.out.println("(" + (i++) + ") name=" + activityType.getName() + ", registration=" + activityType.isRegistrationRequired());
+            System.out.println("(" + (i++) + ") name : " + activityType.getName());
         }
         System.out.println(texte2Display);
         //System.out.println(listActivityTypes);

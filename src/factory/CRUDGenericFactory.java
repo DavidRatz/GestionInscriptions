@@ -1,9 +1,11 @@
-package utils;
+package factory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public class CRUDGenericFactory<T> implements CRUDGeneric<T>{
@@ -31,6 +33,26 @@ public class CRUDGenericFactory<T> implements CRUDGeneric<T>{
     @Override
     public T get(List<T> genericList, int index) {
         return genericList.get(index);
+    }
+
+    @Override
+    public Optional<T> getBy(List<T> genericList, Predicate<T> predicate) {
+        
+        return genericList.stream().filter(predicate).findAny();
+    }
+
+    @Override
+    public int getIndexBy(List<T> genericList, Predicate<T> predicate) {
+        int index;
+        try {
+            index = genericList.indexOf(genericList.stream()
+                    .filter(predicate)
+                    .findFirst()
+                    .get());
+        } catch (NoSuchElementException ex){
+            index = -1;
+        }
+        return index;
     }
 
     @Override

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import factory.ListActivityTypeFactory;
 import model.ActivityType;
 import utils.DataSerialize;
 import utils.DataStore;
-import utils.ListActivityTypeFactory;
 import view.ActivityTypeView;
 
 public class ActivityTypeController {
@@ -81,8 +81,8 @@ public class ActivityTypeController {
         String name2Change = view.gestionActivityTypeName("modifier");
         String newName = view.gestionActivityTypeName("modifier","nouveau nom");
         boolean newRegistration = (view.gestionActivityTypeRegitration().equalsIgnoreCase("o") ? true : false);
-        ActivityType activity2Update = factory.getByName(name2Change).get();
-        int activity2UpdateIndex = factory.getIndexByName(name2Change);
+        ActivityType activity2Update = factory.getBy(activityTypeList,at -> at.getName().equalsIgnoreCase(name2Change)).get();
+        //int activity2UpdateIndex = factory.getIndexBy(activityTypeList, at -> at.getName().equalsIgnoreCase(name2Change));
         view.setError(null);
         view.setInformation(null);
 
