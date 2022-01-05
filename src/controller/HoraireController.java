@@ -1,9 +1,11 @@
 package controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import factory.CRUDGenericFactory;
 import model.ActivityHoraire;
@@ -53,9 +55,9 @@ public class HoraireController {
     }
 
     public void addActivityHoraireAction(){
+        String nameActivity = view.askUser("Entrer un nom d'activité : ");
         String startDateTexte = view.askUser("Entrer une date et heure de début (dd/MM/yyyy hh:mm) : ");
         String endDateTexte = view.askUser("Entrer une date et heure de fin (dd/MM/yyyy hh:mm) : ");
-        String nameActivity = view.askUser("Entrer un nom d'activité : ");
         int activityTypeId = Integer.parseInt(view.askUser("Entrer le numéro du type d'activité choisi : ", listActivityTypes))-1;
         view.setError(null);
         view.setInformation(null);
@@ -101,58 +103,74 @@ public class HoraireController {
     public void updateActivityHoraireAction(){
         String nameActivity2Change = view.askUser("Entrer le nom d'activité à modifier : ");
         String nameActivity = view.askUser("Entrer un nouveau nom d'activité : ");
+        String jourHoraire2ChangeTexte = view.askUser("Entrer la date et heure de début à modifier (dd/MM/yyyy hh:mm) : ");
         String startDateTexte = view.askUser("Entrer une nouvelle date et heure de début (dd/MM/yyyy hh:mm) : ");
         String endDateTexte = view.askUser("Entrer une nouvelle date et heure de fin (dd/MM/yyyy hh:mm) : ");
         int activityTypeId = Integer.parseInt(view.askUser("Entrer le numéro du type d'activité choisi : ", listActivityTypes))-1;
         view.setError(null);
         view.setInformation(null);
+        setModel(null);
 
         ActivityHoraire activityHoraire2Display = null;
 
         LocalDateTime startDate = null;
         LocalDateTime endDate = null;
+        //LocalDateTime jourHoraire2Change = null;
 
-        model = factory.getBy(listActivityHoraires,ah -> ah.getName().equalsIgnoreCase(nameActivity2Change)).get();
+        Predicate<ActivityHoraire> predicate = ah -> ah.getClass().isLocalClass(); 
+        Predicate<ActivityHoraire> predicate2 = ah -> ah.getClass().isLocalClass(); 
 
-        if(startDateTexte.matches("(\\d{2}\\/\\d{2}\\/\\d{2}) (\\d{2}:\\d{2})")){
-            startDate = LocalDateTime.parse(startDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
-            model.setStartDate(startDate);
+        if(jourHoraire2ChangeTexte.matches("(\\d{2}\\/\\d{2}\\/\\d{2}) (\\d{2}:\\d{2})")){
+            LocalDateTime jourHoraire2Change = LocalDateTime.parse(jourHoraire2ChangeTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+            predicate2 = ah -> ah.getStartDate().equals(jourHoraire2Change);
+            
         }
 
-        if(endDateTexte.matches("(\\d{2}\\/\\d{2}\\/\\d{2}) (\\d{2}:\\d{2})")){
-            endDate = LocalDateTime.parse(endDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
-            model.setEndDate(endDate);
-        }
-        ActivityType activityType = null;
-        while(activityType == null && activityTypeId != -1){
-            try{
-                activityType = listActivityTypes.get(activityTypeId);
+        predicate = ah -> ah.getName().equalsIgnoreCase(nameActivity2Change);
+        
+        model = factory.getBy(listActivityHoraires,predicate.and(predicate2)).get();
+
+        if(model != null){
+            if(startDateTexte.matches("(\\d{2}\\/\\d{2}\\/\\d{2}) (\\d{2}:\\d{2})")){
+                startDate = LocalDateTime.parse(startDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+                model.setStartDate(startDate);
             }
-            catch(IndexOutOfBoundsException ex){
-                System.out.println("Aucun élement à cette index ! " + ex.getMessage());
-                activityTypeId = Integer.parseInt(view.askUser("Entrer le numéro du type d'activité choisi : ", listActivityTypes))-1;
+
+            if(endDateTexte.matches("(\\d{2}\\/\\d{2}\\/\\d{2}) (\\d{2}:\\d{2})")){
+                endDate = LocalDateTime.parse(endDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+                model.setEndDate(endDate);
             }
-        }
+            ActivityType activityType = null;
+            while(activityType == null && activityTypeId != -1){
+                try{
+                    activityType = listActivityTypes.get(activityTypeId);
+                }
+                catch(IndexOutOfBoundsException ex){
+                    System.out.println("Aucun élement à cette index ! " + ex.getMessage());
+                    activityTypeId = Integer.parseInt(view.askUser("Entrer le numéro du type d'activité choisi : ", listActivityTypes))-1;
+                }
+            }
 
-        if(!nameActivity.isBlank()){
-            model.setName(nameActivity);
-        }
+            if(!nameActivity.isBlank()){
+                model.setName(nameActivity);
+            }
 
-        if(activityTypeId != -1){
-            model.setActivityType(activityType);
-        }
+            if(activityTypeId != -1){
+                model.setActivityType(activityType);
+            }
 
-        view.setInformation("L'activité modifiée à l'horaire : " + model);
+            view.setInformation("L'activité modifiée à l'horaire : " + model);
+        }
+        else
+            view.setError("Erreur de données !");
     }
 
     public void removeActivityHoraireAction(){
-        String startDateTexte = view.askUser("Entrer une date et heure de début (dd/MM/yyyy hh:mm) : ");
-        String endDateTexte = view.askUser("Entrer une date et heure de fin (dd/MM/yyyy hh:mm) : ");
-        String nameActivity = view.askUser("Entrer un nom d'activité : ");
+        String nameActivity2Remove = view.askUser("Entrer un nom d'activité à supprimer de l'horaire : ");
         int activityTypeId = Integer.parseInt(view.askUser("Entrer le numéro du type d'activité choisi : ", listActivityTypes))-1;
 
-        LocalDateTime startDate = LocalDateTime.parse(startDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
-        LocalDateTime endDate = LocalDateTime.parse(endDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+        //LocalDateTime startDate = LocalDateTime.parse(startDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
+        //LocalDateTime endDate = LocalDateTime.parse(endDateTexte, DateTimeFormatter.ofPattern("dd/MM/yy HH:mm"));
 
         ActivityType activityType = listActivityTypes.get(activityTypeId);
 

@@ -47,7 +47,7 @@ public class ActivityHoraire implements Serializable {
     @Override
     public String toString() {
         return "ActivityHoraire [activityType=" + activityType + ", endDate=" + endDate + ", name=" + name
-                + ", startDate=" + startDate + "]";
+                + ", startDate=" + startDate + "]\n";
     }
     
     
