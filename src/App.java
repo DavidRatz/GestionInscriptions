@@ -71,7 +71,19 @@ public class App {
 
         System.out.println(Arrays.asList(horaireController.getListActivityHoraires()));
 
-        horaireController.updateActivityHoraireAction();
+        //horaireController.updateActivityHoraireAction();
+
+        if(horaireController.getView().getError() != null){
+            System.out.println(horaireController.getView().getError());
+        }
+
+        if(horaireController.getView().getInformation() != null){
+            System.out.println(horaireController.getView().getInformation());
+        }
+
+        System.out.println(Arrays.asList(horaireController.getListActivityHoraires()));
+
+        horaireController.removeActivityHoraireAction();
 
         if(horaireController.getView().getError() != null){
             System.out.println(horaireController.getView().getError());
