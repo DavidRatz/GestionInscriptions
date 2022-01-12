@@ -65,7 +65,7 @@ public class HoraireController {
         int activityTypeId = Integer.parseInt(((ActivityHoraireView) view).askUserActivityType("Entrer le numéro du type d'activité choisi : ", listActivityTypes))-1;
         view.setError(null);
         view.setInformation(null);
-        String error = null;
+        String error = "";
 
         ActivityHoraire activityHoraire2Display = null;
 
@@ -85,7 +85,7 @@ public class HoraireController {
             error += "La date et l'heure de fin ne respecte pas le format ! ";
 
         ActivityType activityType = null;
-        while(activityType == null){
+        while(activityType == null  && activityTypeId != -1){
             try{
                 activityType = listActivityTypes.get(activityTypeId);
             }
@@ -109,7 +109,8 @@ public class HoraireController {
         else
             error += "Données saisies incorrectes ! ";
         
-        view.setError("Erreur : " + error);
+        if(!error.isBlank())
+            view.setError("Erreur : " + error);
     }
 
     public void updateActivityHoraireAction(){
@@ -183,7 +184,8 @@ public class HoraireController {
         else
             error += "Aucune activité trouvée ! ";
         
-        view.setError("Erreur : " + error);
+        if(!error.isBlank())
+            view.setError("Erreur : " + error);
     }
 
     public void removeActivityHoraireAction(){
@@ -218,7 +220,8 @@ public class HoraireController {
         else
             error += "Aucune activité trouvée ! ";
         
-        view.setError("Erreur : " + error);
+        if(!error.isBlank())
+            view.setError("Erreur : " + error);
     }
     
     
